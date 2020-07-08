@@ -68,7 +68,7 @@ class CinematicsBuddyImport(Operator, ImportHelper):
     snapshot_filename: StringProperty(
         name="Campath File",
         description='JSON file containing path snapshots. This can improve framerate consistency (optional)',
-        default='C:\\Program Files (x86)\\Steam\\steamapps\\common\\rocketleague\\Binaries\\Win64\\tv4.json'
+        default=''
     )
 
     vid_speed: EnumProperty(
@@ -82,7 +82,7 @@ class CinematicsBuddyImport(Operator, ImportHelper):
         ],
         name="Video Speed",
         description="Video Speed. Ignored when snapshot file isn't used",
-        default="0.25",
+        default="1.0",
     )
 
     blender_start_frame: IntProperty(

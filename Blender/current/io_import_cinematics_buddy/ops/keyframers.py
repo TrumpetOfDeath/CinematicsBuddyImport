@@ -14,6 +14,7 @@ class ObjectKeyframer:
     prev_quat: Union[Quaternion, None] = None
     prev_subframe: float = 0.0
     ninety: float = 0.0
+    highest_subframe = 0.0
 
     def __init__(self, prefix: str, headers: dict, consts: dict, scn, unit_scale, color=(1, 1, 1, 1)):
         self.prefix = prefix
@@ -67,7 +68,8 @@ class ObjectKeyframer:
         obj.keyframe_insert(data_path='rotation_quaternion', frame=subframe)
         self.interpolate(self.get_list_for_keyframing())
         self.prev_subframe = subframe
-
+        if subframe > self.highest_subframe:
+            self.highest_subframe = subframe
         return
 
     @staticmethod

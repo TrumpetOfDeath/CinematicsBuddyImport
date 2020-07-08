@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 import json
 from .keyframers import BallKeyframer, CameraKeyframer, CarKeyframer
+from math import ceil
 from typing import Dict, List, Optional
 
 
@@ -55,8 +56,6 @@ class FileProcessor(ABC):
     blender_start_frame: int = 1
     objs: list = None
 
-    # written_frames = {}
-
     def __init__(
             self,
             filepath: str,
@@ -91,7 +90,7 @@ class FileProcessor(ABC):
         self.print_progress = print_progress
         self.blender_start_frame = blender_start_frame
 
-        self.objs = [
+        self.objs: List[dict] = [
             {'type': 'camera', 'prefix': 'CAM', 'obj': None},
             {'type': 'ball', 'prefix': 'BALL', 'obj': None},
             {'type': 'car', 'prefix': 'CAR1', 'obj': None, 'color': (0, 0, 1, 1)},
@@ -124,11 +123,20 @@ class FileProcessor(ABC):
                 pass
         return i + 1
 
+    def get_highest_subframe(self) -> float:
+        highest_subframe = 0.0
+        for obj in self.objs:
+            if obj['obj'] is not None:
+                highest_obj_subframe = obj['obj'].highest_subframe
+                if highest_obj_subframe > highest_subframe:
+                    highest_subframe = highest_obj_subframe
+        return highest_subframe
+
     def process(self) -> None:
         headers = {}
         frame = 0
-        if self.print_progress:
-            file_len = self.get_file_len(self.filepath)
+        # if self.print_progress:
+        #     file_len = self.get_file_len(self.filepath)
         self.log("Loading header.")
         with open(self.filepath) as fp:
             line_num = 0
@@ -148,21 +156,17 @@ class FileProcessor(ABC):
                 if int(line[consts['REPLAY_FRAME']]) < self.replay_frame_start:
                     continue
 
-                # if line[consts['FRAME']] not in self.written_frames.keys():
-                #     self.written_frames[line[consts['FRAME']]] = 1
-                # else:
-                #     self.written_frames[line[consts['FRAME']]] += 1
-
                 self.log("Processing replay frame: {} / {}".format(
                     line[consts['REPLAY_FRAME']],
                     str(self.replay_frame_end) + " " * 10))
                 self.process_line(line, frame, headers)
                 frame += 1
             fp.close()
+            highest_subframe = self.get_highest_subframe()
+            if highest_subframe:
+                self.scn.frame_start = self.blender_start_frame
+                self.scn.frame_end = ceil(highest_subframe)
             self.log('Processing complete.')
-            # for f, c in self.written_frames.items():
-            #     if c > 1:
-            #         print("frame {}: {}".format(f, c))
         return
 
     def log(self, msg: str):
