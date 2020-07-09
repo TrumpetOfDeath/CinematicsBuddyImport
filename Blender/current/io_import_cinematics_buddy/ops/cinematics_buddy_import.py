@@ -66,21 +66,21 @@ class CinematicsBuddyImport(Operator, ImportHelper):
     )
 
     snapshot_filename: StringProperty(
-        name="Campath File",
+        name="",
         description='JSON file containing path snapshots. This can improve framerate consistency (optional)',
         default=''
     )
 
     vid_speed: EnumProperty(
         items=[
-            ("2", "200%", ""),
-            ("1", "100%", ""),
+            ("2.0", "200%", ""),
+            ("1.0", "100%", ""),
             ("0.5", "50%", ""),
             ("0.25", "25%", ""),
             ("0.1", "10%", ""),
             ("0.05", "5%", ""),
         ],
-        name="Video Speed",
+        name="",
         description="Video Speed. Ignored when snapshot file isn't used",
         default="1.0",
     )
@@ -106,20 +106,25 @@ class CinematicsBuddyImport(Operator, ImportHelper):
     def draw(self, context):
         layout = self.layout
         box = layout.box()
+        box.label(text='Campath File: (optional)')
         box.prop(self, 'snapshot_filename')
+        box.label(text='Video Speed:')
         box.prop(self, 'vid_speed')
         box.prop(self, 'target_fps')
-        box.prop(self, 'include_frame_nums')
-        box.prop(self, 'car_proxy_name')
-        box.prop(self, 'ball_proxy_name')
-        box.prop(self, 'stadium_proxy_name')
-        box.prop(self, 'sensor_width')
-        box.prop(self, 'maintain_sensor_focal_ratio')
-        box.prop(self, 'blender_start_frame')
+        sub_box = box.box()
+        sub_box.label(text='Advanced:')
+        sub_box.prop(self, 'blender_start_frame')
+        sub_box.prop(self, 'sensor_width')
+        sub_box.prop(self, 'car_proxy_name')
+        sub_box.prop(self, 'ball_proxy_name')
+        sub_box.prop(self, 'stadium_proxy_name')
+        # sub_box.prop(self, 'maintain_sensor_focal_ratio')
+        # sub_box.prop(self, 'include_frame_nums')
         # box.prop(self, 'print_progress')
         # box.label(text='Frames:')
         # box.prop(self, 'replay_frame_start')
         # box.prop(self, 'replay_frame_end')
+
 
     def execute(self, context):
         return Importer.import_cinematics_data(
