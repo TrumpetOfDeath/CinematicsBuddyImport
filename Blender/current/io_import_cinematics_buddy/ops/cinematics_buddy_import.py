@@ -29,10 +29,10 @@ class CinematicsBuddyImport(Operator, ImportHelper):
         default=999999999
     )
 
-    target_fps: FloatProperty(
+    target_fps: IntProperty(
         name="Target FPS",
         description="FPS you intend to use in Blender (use 0 to use FPS from animation export file)",
-        default=60.0
+        default=60
     )
 
     include_frame_nums: BoolProperty(
@@ -131,7 +131,7 @@ class CinematicsBuddyImport(Operator, ImportHelper):
             self.filepath,
             self.replay_frame_start,
             self.replay_frame_end,
-            self.target_fps,
+            float(self.target_fps),
             self.include_frame_nums,
             self.car_proxy_name,
             self.ball_proxy_name,

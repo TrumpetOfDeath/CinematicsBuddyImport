@@ -156,12 +156,12 @@ class FileProcessor(ABC):
                 if int(line[consts['REPLAY_FRAME']]) < self.replay_frame_start:
                     continue
 
-                self.log("Processing replay frame: {} / {}".format(
-                    line[consts['REPLAY_FRAME']],
-                    str(self.replay_frame_end) + " " * 10))
+                self.log("Processing replay frame: {} ".format(
+                    line[consts['REPLAY_FRAME']] + " " * 10))
                 self.process_line(line, frame, headers)
                 frame += 1
             fp.close()
+            self.scn.render.fps = int(self.target_fps)
             highest_subframe = self.get_highest_subframe()
             if highest_subframe:
                 self.scn.frame_start = self.blender_start_frame
