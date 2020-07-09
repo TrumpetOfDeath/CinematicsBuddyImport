@@ -25,7 +25,7 @@ use this template (which already contains the object data).
 - Download the template [here](https://github.com/TrumpetOfDeath/CinematicsBuddyImport/releases/download/v0.1.0/Cinematics_Buddy.zip) 
 (don't unzip it!).
 
-- Click the `App` menu (the little Blender icon to the left of the `File` menu) 
+- Open Blender and click the `App` menu (the little Blender icon to the left of the `File` menu) 
 then click `Install Application Template...`
 
 - Select `Cinematics_Buddy.zip` and click the install button.
@@ -51,7 +51,7 @@ will produce a ton of Blender subframes which can cause jitters during playback.
 
 **Tip:** For best results, record the Cinematics Buddy frames at the same time you record the actual game play.
 
-**Tip:** Read up on the dollycam docs [here](https://docs.google.com/document/d/18MUmF7qsFZQdKZQOJvlWqzIxgGMyDm58uy9ivAnzFk4/edit)
+**Tip:** You can read up on the dollycam docs [here](https://docs.google.com/document/d/18MUmF7qsFZQdKZQOJvlWqzIxgGMyDm58uy9ivAnzFk4/edit)
  and [here](https://docs.google.com/spreadsheets/d/1YyTT8HzlDoLAaAPntU9iz2iQ9DaJiVYEMgpBe9eHdBU/edit#gid=0). 
  Any questions you may have about it can be asked in the Bakkesmod [discord](https://t.co/4GKsbJlAcH?amp=1).
  
@@ -89,7 +89,7 @@ it will be overwritten by this one.
 -  Right-click [here](https://raw.githubusercontent.com/TrumpetOfDeath/blender-addons-contrib/master/io_export_after_effects.py) 
 and choose `Save Link As...` and save it somewhere memorable.
 
-- Go to `Edit > Preferences > Add-ons` then click `Install...`
+- In Blender go to `Edit > Preferences > Add-ons` then click `Install...`
 
 - Select `io_export_after_effects.py` then click the install button. 
 
