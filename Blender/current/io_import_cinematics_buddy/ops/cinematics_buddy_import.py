@@ -115,9 +115,9 @@ class CinematicsBuddyImport(Operator, ImportHelper):
         sub_box.label(text='Advanced:')
         sub_box.prop(self, 'blender_start_frame')
         sub_box.prop(self, 'sensor_width')
-        sub_box.prop(self, 'car_proxy_name')
-        sub_box.prop(self, 'ball_proxy_name')
-        sub_box.prop(self, 'stadium_proxy_name')
+        # sub_box.prop(self, 'car_proxy_name')
+        # sub_box.prop(self, 'ball_proxy_name')
+        # sub_box.prop(self, 'stadium_proxy_name')
         # sub_box.prop(self, 'maintain_sensor_focal_ratio')
         # sub_box.prop(self, 'include_frame_nums')
         # box.prop(self, 'print_progress')
@@ -181,7 +181,6 @@ class Importer:
             'STADIUM_PROXY_NAME': stadium_proxy_name
         }
 
-        # add stadium
         scn = bpy.context.scene
         stadium_obj = bpy.data.objects.get(proxies['STADIUM_PROXY_NAME']).copy()
         stadium_obj.name = 'Stadium'
@@ -189,6 +188,19 @@ class Importer:
         stadium_obj.location = (0.0, 0.0, 0.0)
         stadium_obj.rotation_quaternion = (1.0, 0.0, 0.0, 0.0)
         scn.collection.objects.link(stadium_obj)
+
+        x = 30.739
+        y = 40.96
+        Importer.create_empty(scn, 'Corner Boost 1', (-x, -y, 0.0), unit_scale)
+        Importer.create_empty(scn, 'Corner Boost 2', (x, -y, 0.0), unit_scale)
+        Importer.create_empty(scn, 'Corner Boost 3', (-x, y, 0.0), unit_scale)
+        Importer.create_empty(scn, 'Corner Boost 4', (x, y, 0.0), unit_scale)
+        x = 35.85
+        Importer.create_empty(scn, 'Side Boost 1', (-x, 0.0, 0.0), unit_scale)
+        Importer.create_empty(scn, 'Side Boost 2', (x, 0.0, 0.0), unit_scale)
+        y = 51.4
+        Importer.create_empty(scn, 'Goal Line 1', (0.0, -y, 0.0), unit_scale)
+        Importer.create_empty(scn, 'Goal Line 2', (0.0, y, 0.0), unit_scale)
 
         use_segments = True if len(snapshot_filename) else False
 
@@ -220,3 +232,14 @@ class Importer:
         file_processor.process()
 
         return {'FINISHED'}
+
+    @staticmethod
+    def create_empty(scn, name: str, location, scale):
+        obj = bpy.data.objects.new('empty', None)
+        obj.name = name
+        obj.rotation_mode = 'QUATERNION'
+        obj.rotation_quaternion = (1.0, 0.0, 0.0, 0.0)
+        obj.location = location
+        obj.scale = (scale, scale, scale)
+        scn.collection.objects.link(obj)
+        return
