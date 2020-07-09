@@ -125,7 +125,6 @@ class CinematicsBuddyImport(Operator, ImportHelper):
         # box.prop(self, 'replay_frame_start')
         # box.prop(self, 'replay_frame_end')
 
-
     def execute(self, context):
         return Importer.import_cinematics_data(
             context,

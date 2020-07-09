@@ -25,7 +25,7 @@ bl_info = {
     "author": "TrumpetOfDeath (Discord: TrumpetOfDeath#3020)",
     "version": (0, 1, 0),
     "blender": (2, 80, 0),
-    "location": "File > Import > Cinematics Buddy Data (.txt)",
+    "location": "File > Import > Cinematics Buddy Animation (.txt)",
     "warning": "",
     "doc_url": "",
     "category": "Import-Export",
